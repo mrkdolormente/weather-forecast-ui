@@ -14,10 +14,14 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   get isLoggedIn() {
-    const hasToken = localStorage.getItem(this.tokenName);
+    const hasToken = this.authToken;
     this.loggedIn.next(!!hasToken);
 
     return this.loggedIn.asObservable();
+  }
+
+  get authToken(): string | null {
+    return localStorage.getItem(this.tokenName);
   }
 
   constructor(private readonly http: HttpClient) {}
@@ -26,11 +30,11 @@ export class AuthService {
     return this.http.post<AuthLogin>(`${this.apiUrl}/login`, loginPayload);
   }
 
-  saveAuthToken(token: string) {
+  saveAuthToken(token: string): void {
     localStorage.setItem(this.tokenName, token);
   }
 
-  removeAuthToken() {
+  removeAuthToken(): void {
     localStorage.removeItem(this.tokenName);
   }
 }
