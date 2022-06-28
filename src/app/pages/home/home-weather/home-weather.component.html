@@ -1,7 +1,9 @@
 <section class="full-container wf-max-w-xl wf-text-center">
-  <div class="wf-pb-10">
-    <p><strong>John Smith</strong></p>
-    <a href="">https://github.com/smithjohn</a>
+  <div class="wf-pb-10" *ngIf="userInfo">
+    <p>
+      <strong>{{ userInfo.firstname }} {{ userInfo.lastname }}</strong>
+    </p>
+    <a href="">{{ userInfo.email }}</a>
   </div>
   <div>
     <mat-form-field appearance="outline" floatLabel="never" class="wf-max-w-md wf-w-full">
@@ -12,7 +14,7 @@
       mat-raised-button
       aria-label="Button with display weather text"
       class="wf-bg-cyan-100"
-      routerLink="/usr/weather"
+      routerLink="/weather"
     >
       Display Weather
     </button>
