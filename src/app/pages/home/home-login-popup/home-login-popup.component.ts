@@ -18,6 +18,7 @@ export class HomeLoginPopupComponent {
   });
 
   isSubmitting: boolean = false;
+  isInvalidCredentials: boolean = false;
 
   private readonly destroy$ = new Subject();
 
@@ -55,6 +56,7 @@ export class HomeLoginPopupComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.isSubmitting = true;
+      this.isInvalidCredentials = false;
 
       this.authService
         .login(this.loginForm.value)
@@ -69,7 +71,9 @@ export class HomeLoginPopupComponent {
             this.dialogRef.close();
             this.authService.saveAuthToken(tokenData.token);
           },
-          error: (err) => {},
+          error: (err) => {
+            this.isInvalidCredentials = true;
+          },
         });
     }
   }

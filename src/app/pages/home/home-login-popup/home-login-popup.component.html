@@ -1,6 +1,14 @@
-<h1 mat-dialog-title>Login</h1>
+<h1 mat-dialog-title class="wf-bg-gradient-to-r wf-from-cyan-500 wf-to-blue-500 wf-text-center">
+  Login
+</h1>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content>
+    <ng-container *ngIf="isInvalidCredentials">
+      <p class="wf-bg-red-200 wf-text-red-500 wf-p-2 wf-rounded-s wf-text-sm wf-mb-4">
+        <strong>Ooops,</strong><br />
+        Email and password do not match...
+      </p>
+    </ng-container>
     <mat-card-content class="wf-flex wf-flex-col">
       <mat-form-field appearance="outline" class="ps-w-full">
         <mat-label>Email</mat-label>
