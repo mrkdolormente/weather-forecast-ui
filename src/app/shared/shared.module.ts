@@ -9,7 +9,7 @@ import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [HeaderComponent],
-  imports: [CommonModule, MatToolbarModule, MatIconModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatToolbarModule],
   exports: [HeaderComponent, MatButtonModule],
 })
 export class SharedModule {}
