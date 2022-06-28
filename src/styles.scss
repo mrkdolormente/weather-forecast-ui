@@ -50,11 +50,9 @@ body {
 
 .full-container {
   @apply wf-p-4;
-  @apply wf-max-w-xl;
   @apply wf-mx-auto;
   @apply wf-min-h-screen;
   @apply wf-flex;
   @apply wf-flex-col;
   @apply wf-justify-center;
-  @apply wf-items-baseline;
 }
