@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +7,9 @@ import { Component, Inject } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  constructor() {}
+  constructor(public readonly authService: AuthService) {}
 
-  logout(): void {}
+  logout(): void {
+    this.authService.removeAuthToken();
+  }
 }

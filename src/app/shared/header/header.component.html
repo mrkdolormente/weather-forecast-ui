@@ -9,7 +9,7 @@
   </button>
   <span>Weather Forecast</span>
   <span class="wf-flex-auto"></span>
-  <ng-container *ngIf="false">
+  <ng-container *ngIf="authService.isLoggedIn | async">
     <button
       aria-label="Button with logout text"
       class="wf-bg-cyan-100"
