@@ -1,6 +1,6 @@
 <!-- Header Component Template-->
 <mat-toolbar class="wf-fixed wf-bg-gradient-to-r wf-from-cyan-500 wf-to-blue-500 wf-h-auto">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button aria-label="Button with application icon">
     <img
       alt="Weather Forecast Icon"
       class="wf-h-16 wf-w-20"
@@ -9,7 +9,14 @@
   </button>
   <span>Weather Forecast</span>
   <span class="wf-flex-auto"></span>
-  <button mat-icon-button aria-label="Example icon-button with menu icon" *ngIf="false">
-    <mat-icon>menu</mat-icon>
-  </button>
+  <ng-container *ngIf="authService.isAuthenticated$ | async">
+    <button
+      aria-label="Button with logout text"
+      class="wf-bg-cyan-500"
+      mat-raised-button
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </ng-container>
 </mat-toolbar>

@@ -4,5 +4,12 @@
     Welcome to the weather forecast web application. Please login with your Github user to use the
     application and view the weather in your city.
   </p>
-  <button mat-raised-button class="wf-bg-cyan-500">Login</button>
+  <button
+    aria-label="Button with login text"
+    class="wf-bg-cyan-500"
+    mat-raised-button
+    (click)="authService.loginWithRedirect()"
+  >
+    Login
+  </button>
 </section>
