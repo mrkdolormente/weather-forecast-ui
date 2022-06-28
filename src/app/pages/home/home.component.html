@@ -1,0 +1,4 @@
+<ng-container *ngIf="authService.isLoggedIn | async; else homeWelcome">
+  <app-home-weather></app-home-weather>
+</ng-container>
+<ng-template #homeWelcome><app-home-welcome></app-home-welcome></ng-template>
