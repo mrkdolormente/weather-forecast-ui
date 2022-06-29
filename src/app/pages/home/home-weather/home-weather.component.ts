@@ -100,7 +100,13 @@ export class HomeWeatherComponent implements OnInit, OnDestroy {
    * @returns String of formatted weather info location
    */
   formatWeatherOption(weatherInfo: WeatherGeoCoordinates) {
-    return `${weatherInfo.name}, ${weatherInfo.state}, ${weatherInfo.country}`;
+    const geoLocation = [];
+
+    if (weatherInfo.name) geoLocation.push(weatherInfo.name);
+    if (weatherInfo.state) geoLocation.push(weatherInfo.state);
+    if (weatherInfo.country) geoLocation.push(weatherInfo.country);
+
+    return geoLocation.join(', ');
   }
 
   /**
