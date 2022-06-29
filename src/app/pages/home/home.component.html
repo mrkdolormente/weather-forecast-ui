@@ -1,0 +1,7 @@
+<!-- Render weather home page if user is logged in -->
+<ng-container *ngIf="authService.isLoggedIn | async; else homeWelcome">
+  <app-home-weather></app-home-weather>
+</ng-container>
+
+<!-- Render landing page if guest user -->
+<ng-template #homeWelcome><app-home-welcome></app-home-welcome></ng-template>
