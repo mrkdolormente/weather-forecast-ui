@@ -1,10 +1,13 @@
 <section class="full-container wf-max-w-xl wf-text-center">
-  <div class="wf-pb-10" *ngIf="userInfo">
+  <!-- User data section -->
+  <div class="wf-pb-10" *ngIf="userInfo$ | async as userInfo">
     <p>
       <strong>{{ userInfo.firstname }} {{ userInfo.lastname }}</strong>
     </p>
-    <a href="">{{ userInfo.email }}</a>
+    <a [href]="userInfo.github" target="_blank" class="wf-underline">{{ userInfo.github }}</a>
   </div>
+
+  <!-- City weather data search -->
   <div>
     <mat-form-field appearance="outline" floatLabel="never" class="wf-max-w-md wf-w-full">
       <input
@@ -26,6 +29,9 @@
           {{ formatWeatherOption(info) }}
         </mat-option>
       </mat-autocomplete>
+      <ng-container *ngIf="isSearching">
+        <mat-progress-bar mode="buffer"></mat-progress-bar>
+      </ng-container>
     </mat-form-field>
     <button
       aria-label="Button with display weather text"

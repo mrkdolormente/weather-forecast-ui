@@ -10,6 +10,9 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class HeaderComponent {
   constructor(public readonly authService: AuthService, private readonly router: Router) {}
 
+  /**
+   * @description Logout current user
+   */
   logout(): void {
     this.authService.removeAuthToken();
     this.router.navigate(['/']);

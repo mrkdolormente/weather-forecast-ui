@@ -10,6 +10,9 @@ import { HomeLoginPopupComponent } from '../home-login-popup/home-login-popup.co
 export class HomeWelcomeComponent {
   constructor(private readonly dialog: MatDialog) {}
 
+  /**
+   * @description Open login popup
+   */
   openLoginDialog(): void {
     this.dialog.open(HomeLoginPopupComponent);
   }

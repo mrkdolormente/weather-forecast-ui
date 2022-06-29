@@ -49,11 +49,18 @@ export class HomeLoginPopupComponent {
     this.destroy$.unsubscribe();
   }
 
+  /**
+   * @description Close login popup
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  /**
+   * @description Submit login form
+   */
   onSubmit() {
+    // Check if login form is valid
     if (this.loginForm.valid) {
       this.isSubmitting = true;
       this.isInvalidCredentials = false;
@@ -68,7 +75,10 @@ export class HomeLoginPopupComponent {
         )
         .subscribe({
           next: (tokenData) => {
+            // Close dialog upon success request
             this.dialogRef.close();
+
+            // Save auth token
             this.authService.saveAuthToken(tokenData.token);
           },
           error: (err) => {

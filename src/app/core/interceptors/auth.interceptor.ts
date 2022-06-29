@@ -16,12 +16,18 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private readonly authService: AuthService, private readonly router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Check if request url is not third-party API
     const isAppApi = request.url.includes(environment.apiUrl);
-    const isExternalApi = request.url.includes(environment.weather.apiUrl);
 
+    // Check if request url is weather Api
+    const isWeatherApi = request.url.includes(environment.weather.apiUrl);
+
+    // Get auth token
     const authToken = this.authService.authToken;
 
+    // Check if the auth token exists and request url is not third-party api
     if (authToken && isAppApi) {
+      // Set authorization header
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${authToken}`,
@@ -29,7 +35,8 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    if (isExternalApi) {
+    if (isWeatherApi) {
+      // Set appid query params for weather api calls
       request = request.clone({
         setParams: {
           appid: environment.weather.apiKey,
@@ -39,11 +46,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 403 && isAppApi) {
+        // Check if error status is 403 or 401
+        // Applicable only for non-thirdparty API
+        if ((error.status === 403 || error.status === 401) && isAppApi) {
           this.authService.removeAuthToken();
           this.router.navigate(['/']);
         }
 
+        // Return an error once interceptor catch an error
         return throwError(() => new Error());
       })
     );
