@@ -1,0 +1,40 @@
+<section class="full-container wf-max-w-2xl">
+  <table
+    class="table-container wf-mb-20 wf-text-left"
+    *ngIf="currentWeather$ | async as currentWeather; else loading; else: loading"
+  >
+    <thead>
+      <th>Date (mm/dd/yyyy)</th>
+      <th>Temp(F)</th>
+      <th class="wf-hidden md:wf-table-cell">Description</th>
+      <th class="wf-hidden md:wf-table-cell">Main</th>
+      <th class="wf-hidden md:wf-table-cell">Pressure</th>
+      <th class="wf-hidden md:wf-table-cell">Humidity</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ currentWeather.calculation_date | date: 'MM/dd/yyyy' }}</td>
+        <td>{{ currentWeather.main.temp }}</td>
+        <td class="wf-hidden md:wf-table-cell">{{ currentWeather.weather[0].description }}</td>
+        <td class="wf-hidden md:wf-table-cell">{{ currentWeather.weather[0].main }}</td>
+        <td class="wf-hidden md:wf-table-cell">{{ currentWeather.main.pressure }}</td>
+        <td class="wf-hidden md:wf-table-cell">{{ currentWeather.main.humidity }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #loading>
+    <div class="wf-w-full wf-inline-flex wf-justify-center">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
+  <div class="wf-inline-flex wf-justify-end">
+    <button
+      mat-raised-button
+      aria-label="Button with back text"
+      class="wf-bg-cyan-100"
+      routerLink="/"
+    >
+      Back
+    </button>
+  </div>
+</section>
