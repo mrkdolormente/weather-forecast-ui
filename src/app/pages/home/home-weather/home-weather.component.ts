@@ -9,6 +9,7 @@ import {
   finalize,
   fromEvent,
   map,
+  Observable,
   Subject,
   takeUntil,
 } from 'rxjs';
@@ -28,7 +29,7 @@ export class HomeWeatherComponent implements OnInit, OnDestroy {
   options: string[] = [];
   searchControl = new FormControl('', Validators.required);
 
-  userInfo?: UserInfo;
+  userInfo$?: Observable<UserInfo>;
   weatherData?: WeatherGeoCoordinates[];
   selectedWeatherOption?: WeatherGeoCoordinates;
 
@@ -47,14 +48,7 @@ export class HomeWeatherComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.userService
-      .getUserInfo()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (userInfo: UserInfo) => {
-          this.userInfo = userInfo;
-        },
-      });
+    this.userInfo$ = this.userService.getUserInfo().pipe(takeUntil(this.destroy$));
 
     fromEvent(this.searchInput.nativeElement, 'keyup')
       .pipe(
@@ -92,15 +86,28 @@ export class HomeWeatherComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
+  /**
+   * @description Selected auto complete option
+   * @param weatherInfo Selected weather geo coodinates info
+   */
   selectAutoComplete(weatherInfo: WeatherGeoCoordinates) {
     this.selectedWeatherOption = weatherInfo;
   }
 
+  /**
+   * @desciption Format weather info location
+   * @param weatherInfo Weather geo coordinates option info
+   * @returns String of formatted weather info location
+   */
   formatWeatherOption(weatherInfo: WeatherGeoCoordinates) {
     return `${weatherInfo.name}, ${weatherInfo.state}, ${weatherInfo.country}`;
   }
 
+  /**
+   * @descrption Redirect to weather page
+   */
   displayWeather() {
+    // Check if weather redirect action is valid
     if (this.isWeatherRedirectValid) {
       this.router.navigate(['/weather'], {
         queryParams: {

@@ -1,6 +1,8 @@
+<!-- Login header -->
 <h1 mat-dialog-title class="wf-bg-gradient-to-r wf-from-cyan-500 wf-to-blue-500 wf-text-center">
   Login
 </h1>
+<!-- Login form -->
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div mat-dialog-content>
     <ng-container *ngIf="isInvalidCredentials">
@@ -37,6 +39,8 @@
     </mat-card-content>
     <mat-card-actions> </mat-card-actions>
   </div>
+
+  <!-- Login form actions -->
   <div mat-dialog-actions class="wf-justify-between">
     <button mat-raised-button (click)="onNoClick()" type="button">No Thanks</button>
     <button mat-raised-button class="wf-bg-cyan-100" [disabled]="isSubmitting">Sign In</button>

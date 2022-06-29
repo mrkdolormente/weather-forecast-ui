@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { WeatherService } from 'src/app/core/services/weather.service';
 import { CurrentWeather } from 'src/app/models/weather.interface';
 
@@ -9,8 +9,10 @@ import { CurrentWeather } from 'src/app/models/weather.interface';
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.scss'],
 })
-export class WeatherComponent implements OnInit {
+export class WeatherComponent implements OnInit, OnDestroy {
   currentWeather$?: Observable<CurrentWeather>;
+
+  private readonly destroy$ = new Subject();
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -20,11 +22,15 @@ export class WeatherComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
+      // Get latitude and longitude on the query parameter
       const { lat, lon } = params;
 
+      // Check wether the latitude and longitude parameter exists on the query parameter
       if (lat && lon) {
         this.currentWeather$ = this.weatherService.getCurrentWeather(lat, lon).pipe(
+          takeUntil(this.destroy$),
           map((response) => {
+            // Convert unix timestamp to full text string
             const defaultDate = new Date(0);
             defaultDate.setUTCSeconds(response.dt);
 
@@ -35,8 +41,14 @@ export class WeatherComponent implements OnInit {
           })
         );
       } else {
+        // Navigate to landing page if latitude and longitude doesn't exists on the query parameter
         this.router.navigate(['/']);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

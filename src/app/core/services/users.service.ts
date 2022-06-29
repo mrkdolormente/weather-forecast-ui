@@ -9,8 +9,13 @@ import { environment } from 'src/environments/environment';
 })
 export class UsersService {
   private readonly apiUrl: string = `${environment.apiUrl}/users`;
+
   constructor(private readonly http: HttpClient) {}
 
+  /**
+   * @description Get logged in user info
+   * @returns Observable with UserInfo interface
+   */
   getUserInfo(): Observable<UserInfo> {
     return this.http.get<UserInfo>(`${this.apiUrl}/my-info`);
   }
