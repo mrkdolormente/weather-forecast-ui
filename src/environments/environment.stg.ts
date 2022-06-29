@@ -1,4 +1,8 @@
 export const environment = {
   production: false,
-  apiUrl: ''
+  apiUrl: '',
+  weather: {
+    apiKey: '',
+    apiUrl: '',
+  },
 };

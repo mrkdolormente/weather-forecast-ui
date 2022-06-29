@@ -7,14 +7,32 @@
   </div>
   <div>
     <mat-form-field appearance="outline" floatLabel="never" class="wf-max-w-md wf-w-full">
-      <input matInput placeholder="City" required />
+      <input
+        type="text"
+        placeholder="City"
+        aria-label="Number"
+        matInput
+        [matAutocomplete]="auto"
+        [formControl]="searchControl"
+        #searchInput
+      />
       <mat-icon matPrefix>search</mat-icon>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let info of weatherData"
+          [value]="formatWeatherOption(info)"
+          (onSelectionChange)="selectAutoComplete(info)"
+        >
+          {{ formatWeatherOption(info) }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
     <button
-      mat-raised-button
       aria-label="Button with display weather text"
+      mat-raised-button
       class="wf-bg-cyan-100"
-      routerLink="/weather"
+      [disabled]="!isWeatherRedirectValid"
+      (click)="displayWeather()"
     >
       Display Weather
     </button>
